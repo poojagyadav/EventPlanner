@@ -54,7 +54,7 @@ function Main() {
     }
   };
 
-  /*LANDING PAGE */
+  /* ================= LANDING PAGE ================= */
   if (!isLoggedIn) {
     return (
       <div
@@ -91,21 +91,6 @@ function Main() {
                           Login
                         </button>
                       </div>
-
-                      <div className="row text-center">
-                        <div className="col-4">
-                          <h5 className="fw-bold">Upcoming</h5>
-                          <small className="text-muted">View events</small>
-                        </div>
-                        <div className="col-4">
-                          <h5 className="fw-bold text-success">Organized</h5>
-                          <small className="text-muted">Easy tracking</small>
-                        </div>
-                        <div className="col-4">
-                          <h5 className="fw-bold text-warning">Secure</h5>
-                          <small className="text-muted">Safe data</small>
-                        </div>
-                      </div>
                     </div>
 
                     <div className="col-md-6 text-center">
@@ -126,7 +111,7 @@ function Main() {
     );
   }
 
-  /*DASHBOARD*/
+  /* ================= DASHBOARD ================= */
   return (
     <div className="container mt-5">
       {view === "dashboard" && (
@@ -135,10 +120,9 @@ function Main() {
 
           <div className="row justify-content-center">
             <div className="col-md-5 mb-4">
-              <div className="card shadow-lg h-100">
+              <div className="card shadow-lg">
                 <div className="card-body text-center">
-                  <h5 className="fw-bold">Create Event</h5>
-                  <p className="text-muted">Add a new event</p>
+                  <h5>Create Event</h5>
                   <button
                     className="btn btn-dark w-100"
                     onClick={() => setView("create")}
@@ -150,10 +134,9 @@ function Main() {
             </div>
 
             <div className="col-md-5 mb-4">
-              <div className="card shadow-lg h-100">
+              <div className="card shadow-lg">
                 <div className="card-body text-center">
-                  <h5 className="fw-bold">View Events</h5>
-                  <p className="text-muted">See all your events</p>
+                  <h5>View Events</h5>
                   <button
                     className="btn btn-outline-dark w-100"
                     onClick={fetchEvents}
@@ -166,7 +149,7 @@ function Main() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-danger mt-3" onClick={logout}>
+            <button className="btn btn-danger" onClick={logout}>
               Logout
             </button>
           </div>
@@ -178,8 +161,7 @@ function Main() {
           className="card p-4 shadow-lg mx-auto"
           style={{ maxWidth: "500px" }}
         >
-          <h4 className="text-center mb-3">Create Event</h4>
-
+          <h4>Create Event</h4>
           <form onSubmit={createEvent}>
             <input
               className="form-control mb-2"
@@ -208,13 +190,9 @@ function Main() {
               onChange={(e) => setTime(e.target.value)}
               required
             />
-            <button className="btn btn-dark w-100">Save Event</button>
+            <button className="btn btn-dark w-100">Save</button>
           </form>
-
-          <button
-            className="btn btn-link mt-2"
-            onClick={() => setView("dashboard")}
-          >
+          <button className="btn btn-link" onClick={() => setView("dashboard")}>
             ← Back
           </button>
         </div>
@@ -222,22 +200,18 @@ function Main() {
 
       {view === "view" && (
         <div>
-          <h4 className="text-center mb-3">My Events</h4>
-
+          <h4 className="text-center">My Events</h4>
           {events.length === 0 && (
             <p className="text-center">No events found</p>
           )}
-
           {events.map((e) => (
-            <div key={e._id} className="card mb-2 p-3 shadow-sm">
-              <h6 className="fw-bold">{e.title}</h6>
-              <p>{e.description}</p>
+            <div key={e._id} className="card p-3 mb-2">
+              <h6>{e.title}</h6>
               <small>
                 {e.date} | {e.time}
               </small>
             </div>
           ))}
-
           <div className="text-center">
             <button
               className="btn btn-link"
