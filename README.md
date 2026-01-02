@@ -118,7 +118,6 @@ The frontend is built and served directly from the backend, so no separate front
 ## Scalability Notes
 
 For production-level scaling, the following improvements can be made:
-- Separate frontend and backend deployments
 - Add pagination and search to events
 - Improve error logging and monitoring
 - Implement role-based access control
