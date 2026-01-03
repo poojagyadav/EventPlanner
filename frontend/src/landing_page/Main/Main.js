@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../../api";
 
 function Main() {
   const navigate = useNavigate();
@@ -14,12 +14,6 @@ function Main() {
   const [time, setTime] = useState("");
   const [events, setEvents] = useState([]);
 
-  const authHeader = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/signin");
@@ -28,11 +22,13 @@ function Main() {
   const createEvent = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "/api/events",
-        { title, description, date, time },
-        authHeader
-      );
+      await API.post("/events", {
+        title,
+        description,
+        date,
+        time,
+      });
+
       alert("Event created successfully");
       setTitle("");
       setDescription("");
@@ -46,7 +42,7 @@ function Main() {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("/api/events", authHeader);
+      const res = await API.get("/events");
       setEvents(res.data);
       setView("view");
     } catch (err) {
@@ -162,6 +158,7 @@ function Main() {
           style={{ maxWidth: "500px" }}
         >
           <h4>Create Event</h4>
+
           <form onSubmit={createEvent}>
             <input
               className="form-control mb-2"
@@ -170,12 +167,14 @@ function Main() {
               onChange={(e) => setTitle(e.target.value)}
               required
             />
+
             <textarea
               className="form-control mb-2"
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
+
             <input
               type="date"
               className="form-control mb-2"
@@ -183,6 +182,7 @@ function Main() {
               onChange={(e) => setDate(e.target.value)}
               required
             />
+
             <input
               type="time"
               className="form-control mb-3"
@@ -190,9 +190,14 @@ function Main() {
               onChange={(e) => setTime(e.target.value)}
               required
             />
+
             <button className="btn btn-dark w-100">Save</button>
           </form>
-          <button className="btn btn-link" onClick={() => setView("dashboard")}>
+
+          <button
+            className="btn btn-link"
+            onClick={() => setView("dashboard")}
+          >
             ← Back
           </button>
         </div>
@@ -201,9 +206,11 @@ function Main() {
       {view === "view" && (
         <div>
           <h4 className="text-center">My Events</h4>
+
           {events.length === 0 && (
             <p className="text-center">No events found</p>
           )}
+
           {events.map((e) => (
             <div key={e._id} className="card p-3 mb-2">
               <h6>{e.title}</h6>
@@ -212,6 +219,7 @@ function Main() {
               </small>
             </div>
           ))}
+
           <div className="text-center">
             <button
               className="btn btn-link"
