@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "/api",
+  baseURL: process.env.NODE_ENV === "production"
+    ? "/api"
+    : "http://localhost:5000/api",
 });
 
 API.interceptors.request.use((req) => {
@@ -13,5 +15,3 @@ API.interceptors.request.use((req) => {
 });
 
 export default API;
-
-
