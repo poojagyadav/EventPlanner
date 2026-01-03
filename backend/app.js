@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("Mongo error:", err.message));
+  .catch((err) => console.error(err.message));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
@@ -25,7 +25,7 @@ app.use("/api/events", eventRoutes);
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   if (req.originalUrl.startsWith("/api")) {
     return res.status(404).json({ message: "API route not found" });
   }
