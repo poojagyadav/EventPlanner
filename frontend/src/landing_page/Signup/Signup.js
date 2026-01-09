@@ -10,17 +10,11 @@ function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
     try {
-      await API.post("/auth/signup", {
-        name,
-        email,
-        password,
-      });
-
+      await API.post("/auth/signup", { name, email, password });
       navigate("/signin");
     } catch (err) {
-      alert("Signup failed");
+      alert(err.response?.data?.message || "Signup failed");
     }
   };
 
